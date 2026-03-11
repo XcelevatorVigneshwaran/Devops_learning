@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+# Define pipeline-level variables
+env:
+  MY_VARIABLE_1: "HelloWorld"
+  MY_VARIABLE_2: "12345"
+
 jobs:
 
   build:
@@ -23,6 +28,14 @@ jobs:
 
       - name: Build Project
         run: mvn clean compile
+
+      # ✅ Print variables and secrets in build stage
+      - name: Print Variables and Secrets
+        run: |
+          echo "Variable 1: $MY_VARIABLE_1"
+          echo "Variable 2: $MY_VARIABLE_2"
+          echo "Secret 1: ${{ secrets.SECRET_KEY_1 }}"
+          echo "Secret 2: ${{ secrets.SECRET_KEY_2 }}"
 
   unit-tests:
     name: Unit Tests
